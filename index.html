@@ -9,8 +9,6 @@
 <style>
   /* ---- Easy settings ---------------------------------------------- */
   :root {
-    --drawing-width: 460px;   /* width of EACH drawing; height follows   */
-    --gap: 16px;              /* space between the two drawings          */
     --blue: #2f7fd1;          /* matches the Drawing A tab in Canvas     */
     --blue-light: #d6e8f6;    /* matches the Drawing B tab in Canvas     */
     --text: #2d3b45;          /* Canvas body text colour                 */
@@ -21,31 +19,30 @@
   * { box-sizing: border-box; }
 
   body {
-    margin: 0;
-    padding: 8px;
+    max-width: 1240px;  /* same cap on both pages so the drawings match */
+    margin: 0 auto;
+    padding: 16px;
     font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
     color: var(--text);
     background: #fff;
   }
 
-  /* The two drawings always sit side by side at a fixed width.
-     If the page is narrower than both together, they shrink
-     proportionally - the picture is never cropped. */
+  /* Same layout as the answer key: two equal columns side by side,
+     stacked only on phones. Pictures are never cropped. */
   .drawings {
-    display: flex;
-    justify-content: center;
-    gap: var(--gap);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 620px) {
+    .drawings { grid-template-columns: 1fr; }
   }
 
-  .drawing {
-    flex: 0 1 var(--drawing-width);
-    min-width: 0;
-    margin: 0;
-  }
+  .drawing { margin: 0; min-width: 0; }
 
   .title {
     margin: 0;
-    padding: 10px 16px;
+    padding: 12px 16px;
     font-size: 1.05rem;
     font-weight: 400;
     text-align: center;
@@ -60,12 +57,7 @@
     line-height: 0;
     cursor: zoom-in;
   }
-
-  .picture img {
-    display: block;
-    width: 100%;
-    height: auto;          /* keeps the original proportions */
-  }
+  .picture img { display: block; width: 100%; height: auto; }
 
   .open {
     display: inline-block;
@@ -78,12 +70,6 @@
   .open:focus-visible {
     outline: 3px solid #0770a3;
     outline-offset: 2px;
-  }
-
-  /* Only on phones: stack the drawings so they stay large enough to play */
-  @media (max-width: 560px) {
-    .drawings { flex-direction: column; align-items: center; }
-    .drawing { flex: none; width: 100%; max-width: var(--drawing-width); }
   }
 </style>
 </head>
